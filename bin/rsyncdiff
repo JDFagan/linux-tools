@@ -9,8 +9,8 @@ if [[ $# -ne 2 ]]; then
     exit 1
 fi
 
-echo "rsync --dry-run -vacO --delete $1 root@$2:$1 > rsync.local"
-rsync --dry-run -vacO --delete $1 root@$2:$1 > rsync.local
+echo "rsync --dry-run -xvacO --delete $1 root@$2:$1 > rsync.local"
+rsync --dry-run -xvacO --delete $1 root@$2:$1 > rsync.local
 
-echo "rsync --dry-run -vacO --delete root@$2:$1 $1 > rsync.remote"
-rsync --dry-run -vacO --delete root@$2:$1 $1 > rsync.remote
+echo "rsync --dry-run -xvacO --delete root@$2:$1 $1 > rsync.remote"
+rsync --dry-run -xvacO --delete root@$2:$1 $1 > rsync.remote

@@ -1,16 +1,13 @@
 #!/bin/bash
-# arg1 == full path to local directory
+# arg1 == full path to local file
 # arg2 == fully qualified hostname
 echo "Running $0..."
 if [[ $# -ne 2 ]]; then
     echo 'Incorrect invocation - requires 2 arguments:'
-    echo '  $1 - full path to local directory of directory you want to diff'
+    echo '  $1 - full path to local file you want to diff'
     echo '  $2 - fully qualified remote hostname that you want to compare against'
     exit 1
 fi
 
-echo "rsync --dry-run -vacO --delete $1 root@$2:$1 > rsync.local"
-rsync --dry-run -vacO --delete $1 root@$2:$1 > rsync.local
-
-echo "rsync --dry-run -vacO --delete root@$2:$1 $1 > rsync.remote"
-rsync --dry-run -vacO --delete root@$2:$1 $1 > rsync.remote
+echo "diff $1 <(ssh root@$2 'cat $1')"
+diff $1 <(ssh root@$2 "cat \"$1\"")
